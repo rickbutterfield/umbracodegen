@@ -1,4 +1,13 @@
-import { PlopGeneratorConfig } from 'node-plop';
+import { PlopGeneratorConfig, Prompts } from 'node-plop';
+
+const defaultPrompts: Prompts = [
+  {
+    type: 'input',
+    name: 'path',
+    message: 'Path to create files:',
+    default: 'src/{{component}}/{{alias}}'
+  }
+];
 
 const allGenerators: Record<string, PlopGeneratorConfig> = {
   section: {
@@ -33,7 +42,8 @@ const allGenerators: Record<string, PlopGeneratorConfig> = {
         name: 'pathname',
         message: 'Enter section pathname:',
         default: 'time'
-      }
+      },
+      ...defaultPrompts
     ],
     actions: [
       {
@@ -75,7 +85,8 @@ const allGenerators: Record<string, PlopGeneratorConfig> = {
         name: 'pathname',
         message: 'Enter dashboard pathname:',
         default: 'time'
-      }
+      },
+      ...defaultPrompts
     ],
     actions: [
       {
@@ -87,6 +98,43 @@ const allGenerators: Record<string, PlopGeneratorConfig> = {
         type: 'add',
         path: 'src/dashboards/{{alias}}/manifest.ts',
         templateFile: 'templates/dashboards/manifest.hbs'
+      }
+    ]
+  },
+  sidebar: {
+    description: 'Generate a new sidebar',
+    prompts: [
+      {
+        type: 'input',
+        name: 'alias',
+        message: 'Enter sidebar alias:',
+        default: 'time'
+      },
+      {
+        type: 'input',
+        name: 'name',
+        message: 'Enter sidebar name:',
+        default: 'Time'
+      },
+      {
+        type: 'input',
+        name: 'label',
+        message: 'Enter sidebar label:',
+        default: 'Time'
+      },
+      {
+        type: 'number',
+        name: 'items',
+        message: 'Number of menu items:',
+        default: 1
+      },
+      ...defaultPrompts
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/sidebar/{{alias}}/manifest.ts',
+        templateFile: 'templates/sidebar/manifest.hbs'
       }
     ]
   }

@@ -6,6 +6,8 @@ import path from 'path';
 import figlet from 'figlet';
 import { generators } from './generators.js';
 import { fileURLToPath } from 'url';
+import { Answers } from 'inquirer';
+import Handlebars from 'handlebars';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -25,7 +27,7 @@ figlet('umbracodegen', (err, data) => {
 
   program
     .name("umbracodegen")
-    .version('1.0.0-alpha.0')
+    .version('1.0.0-alpha.1')
     .description("Generate boilerplate code for building v14+ Umbraco packages");
 
   // Define a CLI command to generate a component using Plop
@@ -39,12 +41,12 @@ figlet('umbracodegen', (err, data) => {
     .argument('[component]', `specify the type of component to create (${commaSeparatedList})`)
     .action((component) => {
       if (component) {
-        plop
-          .getGenerator(component)
+        const generator = plop.getGenerator(component);
+        generator
           .runPrompts()
-          .then((answers) => {
-            plop
-              .getGenerator(component)
+          .then((answers: Answers) => {
+            
+            return generator
               .runActions(answers)
               .then(() => {
                 console.log(`${component} component generated successfully!`);
@@ -52,6 +54,7 @@ figlet('umbracodegen', (err, data) => {
               .catch((err) => {
                 console.error('Error generating component:', err);
               });
+
           });
       }
       else {
@@ -59,23 +62,33 @@ figlet('umbracodegen', (err, data) => {
           .runPrompts()
           .then((answers) => {
             const selectedComponent = answers["generator"];
-            plop
-              .getGenerator(selectedComponent)
+            const generator = plop.getGenerator(selectedComponent);
+            
+            generator
               .runPrompts()
               .then((answers) => {
-                plop
-                  .getGenerator(selectedComponent)
+
+                return generator
                   .runActions(answers)
                   .then(() => {
-                    console.log(`${selectedComponent} component generated successfully!`);
+                    console.log(`${component} component generated successfully!`);
                   })
                   .catch((err) => {
                     console.error('Error generating component:', err);
                   });
+
               });
         });
       }
     });
 
   program.parse(process.argv);
+});
+
+Handlebars.registerHelper('times', (n: number, context: any, options: Handlebars.HelperOptions) => {
+  let accum = '';
+  for (let i = 0; i < n; i++) {
+    accum += options.fn({...context, index: i});
+  }
+  return accum;
 });

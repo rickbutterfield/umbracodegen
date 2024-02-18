@@ -1,0 +1,52 @@
+import { ManifestMenu, ManifestMenuItem, ManifestSectionSidebarApp } from "@umbraco-cms/backoffice/extension-registry";
+
+const sidebarAppManifest : ManifestSectionSidebarApp = {
+    type: '{{ typeName name }}SidebarApp',
+    kind: 'menuWithEntityActions',
+    alias: '{{ alias }}.sidebar.app',
+    name: '{{ name }}',
+    meta: {
+        label: "{{ label }}",
+        menu: "{{ alias }}.menu"
+       
+    },
+    conditions: [
+        {
+            alias: "Umb.Condition.SectionAlias",
+            match: "{{ alias }}.section"
+        }
+    ]
+};
+
+const menuManifest: ManifestMenu = {
+    type: 'menu',
+    alias: '{{ alias }}.menu',
+    name: '{{ name }} sidebar menu',
+    meta: {
+        label: '{{ label }}'
+    }
+}
+
+const menuItemManifest: ManifestMenuItem[] = [
+  {{#times items this}}
+  {
+    type: 'menuItem',
+    alias: '{{ alias }}.menu.item.{{index}}',
+    name: '{{ name }} menu item {{index}}',
+    meta: {
+        label: 'Menu item {{index}}',
+        icon: 'icon-tools',
+        entityType: '{{ workspace }}',
+        menus: [
+            '{{ alias }}.menu'
+        ]
+    }
+  },
+  {{/times}}
+];
+
+export const manifests = [
+    sidebarAppManifest,
+    menuManifest,
+    menuItemManifest
+];
