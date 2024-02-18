@@ -20,6 +20,7 @@
     "url": "git+https://github.com/rickbutterfield/umbracodegen.git"
   },
   "keywords": [
+    "cli",
     "umbraco",
     "Umbraco"
   ],
