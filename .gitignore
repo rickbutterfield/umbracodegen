@@ -132,3 +132,4 @@ dist
 # Built files
 bin
 .DS_Store
+package-lock.json
