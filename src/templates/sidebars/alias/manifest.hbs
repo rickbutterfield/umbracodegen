@@ -1,7 +1,7 @@
 import { ManifestMenu, ManifestMenuItem, ManifestSectionSidebarApp } from "@umbraco-cms/backoffice/extension-registry";
 
 const sidebarAppManifest : ManifestSectionSidebarApp = {
-    type: '{{ typeName name }}SidebarApp',
+    type: 'sectionSidebarApp',
     kind: 'menuWithEntityActions',
     alias: '{{ alias }}.sidebar.app',
     name: '{{ name }}',
@@ -48,5 +48,5 @@ const menuItemManifest: ManifestMenuItem[] = [
 export const manifests = [
     sidebarAppManifest,
     menuManifest,
-    menuItemManifest
+    ...menuItemManifest
 ];

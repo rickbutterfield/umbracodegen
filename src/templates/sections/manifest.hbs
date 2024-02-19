@@ -1,14 +1,5 @@
-import type { ManifestSection } from '@umbraco-cms/backoffice/extension-registry';
+import { manifests as {{alias}}SectionManifests } from './{{alias}}/manifest';
 
-const section: ManifestSection = {
-    type: 'section',
-    alias: '{{ alias }}.section',
-    name: '{{ name }}',
-    weight: {{ weight }},
-    meta: {
-        label: '{{ label }}',
-        pathname: '{{ pathname }}',
-    },
-};
-
-export const manifests = [section];
+export const manifests = [
+...{{alias}}SectionManifests
+];

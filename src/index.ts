@@ -7,13 +7,13 @@ import figlet from 'figlet';
 import { generators } from './generators.js';
 import { fileURLToPath } from 'url';
 import { Answers } from 'inquirer';
-import Handlebars from 'handlebars';
-
+import './helpers.js';
+ 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const plopfilePath = path.resolve(__dirname, 'plopfile.js');
 
-const generatorNames: string[] = Object.keys(generators);
+const generatorNames: string[] = Object.keys(generators).filter(x => x !== "builder");
 const commaSeparatedList: string = generatorNames.join(', ');
 
 const plop = await nodePlop(plopfilePath);
@@ -27,13 +27,14 @@ figlet('umbracodegen', (err, data) => {
 
   program
     .name("umbracodegen")
-    .version('1.0.0-alpha.1')
-    .description("Generate boilerplate code for building v14+ Umbraco packages");
+    .version('1.0.0-alpha.4')
+    .description("Generate boilerplate code for building v14+ Umbraco packages")
+    .alias("umb");
 
-  // Define a CLI command to generate a component using Plop
-  program
-    .command('new')
-    .description('Generate a new blank set of all components');
+  // TODO
+  // program
+  //   .command('new')
+  //   .description('Generate a new blank set of all components');
 
   program
     .command('generate')
@@ -61,7 +62,7 @@ figlet('umbracodegen', (err, data) => {
         plop.getGenerator('builder')
           .runPrompts()
           .then((answers) => {
-            const selectedComponent = answers["generator"];
+            const selectedComponent = answers["component"];
             const generator = plop.getGenerator(selectedComponent);
             
             generator
@@ -71,7 +72,7 @@ figlet('umbracodegen', (err, data) => {
                 return generator
                   .runActions(answers)
                   .then(() => {
-                    console.log(`${component} component generated successfully!`);
+                    console.log(`${selectedComponent} component generated successfully!`);
                   })
                   .catch((err) => {
                     console.error('Error generating component:', err);
@@ -83,12 +84,4 @@ figlet('umbracodegen', (err, data) => {
     });
 
   program.parse(process.argv);
-});
-
-Handlebars.registerHelper('times', (n: number, context: any, options: Handlebars.HelperOptions) => {
-  let accum = '';
-  for (let i = 0; i < n; i++) {
-    accum += options.fn({...context, index: i});
-  }
-  return accum;
 });

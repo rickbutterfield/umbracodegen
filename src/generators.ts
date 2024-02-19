@@ -1,13 +1,5 @@
 import { PlopGeneratorConfig, Prompts } from 'node-plop';
-
-const defaultPrompts: Prompts = [
-  {
-    type: 'input',
-    name: 'path',
-    message: 'Path to create files:',
-    default: 'src/{{component}}/{{alias}}'
-  }
-];
+import path from 'path';
 
 const allGenerators: Record<string, PlopGeneratorConfig> = {
   section: {
@@ -17,13 +9,13 @@ const allGenerators: Record<string, PlopGeneratorConfig> = {
         type: 'input',
         name: 'alias',
         message: 'Enter section alias:',
-        default: 'time'
+        default: 'userManagement'
       },
       {
         type: 'input',
         name: 'name',
         message: 'Enter section name:',
-        default: 'Time'
+        default: 'User Management'
       },
       {
         type: 'number',
@@ -35,21 +27,26 @@ const allGenerators: Record<string, PlopGeneratorConfig> = {
         type: 'input',
         name: 'label',
         message: 'Enter section label:',
-        default: 'Time'
+        default: 'User Management'
       },
       {
         type: 'input',
         name: 'pathname',
         message: 'Enter section pathname:',
-        default: 'time'
-      },
-      ...defaultPrompts
+        default: 'user-management'
+      }
     ],
     actions: [
       {
         type: 'add',
-        path: 'src/sections/{{alias}}/manifests.ts',
-        templateFile: 'templates/sections/manifest.hbs'
+        path: path.join(process.cwd(), 'src/sections/{{alias}}/manifest.ts'),
+        templateFile: 'templates/sections/alias/manifest.hbs'
+      },
+      {
+        type: 'add',
+        path: path.join(process.cwd(), 'src/sections/manifest.ts'),
+        templateFile: 'templates/sections/manifest.hbs',
+        skipIfExists: true
       }
     ]
   },
@@ -60,13 +57,13 @@ const allGenerators: Record<string, PlopGeneratorConfig> = {
         type: 'input',
         name: 'alias',
         message: 'Enter dashboard alias:',
-        default: 'time'
+        default: 'userManagement'
       },
       {
         type: 'input',
         name: 'name',
         message: 'Enter dashboard name:',
-        default: 'Time'
+        default: 'User Management'
       },
       {
         type: 'number',
@@ -78,26 +75,31 @@ const allGenerators: Record<string, PlopGeneratorConfig> = {
         type: 'input',
         name: 'label',
         message: 'Enter dashboard label:',
-        default: 'Time'
+        default: 'User Management'
       },
       {
         type: 'input',
         name: 'pathname',
         message: 'Enter dashboard pathname:',
-        default: 'time'
-      },
-      ...defaultPrompts
+        default: 'user-management'
+      }
     ],
     actions: [
       {
         type: 'add',
-        path: 'src/dashboards/{{alias}}/{{alias}}-dashboard.element.ts',
-        templateFile: 'templates/dashboards/element.hbs'
+        path: path.join(process.cwd(), 'src/dashboards/{{alias}}/{{alias}}-dashboard.element.ts'),
+        templateFile: 'templates/dashboards/alias/element.hbs'
       },
       {
         type: 'add',
-        path: 'src/dashboards/{{alias}}/manifest.ts',
-        templateFile: 'templates/dashboards/manifest.hbs'
+        path: path.join(process.cwd(), 'src/dashboards/{{alias}}/manifest.ts'),
+        templateFile: 'templates/dashboards/alias/manifest.hbs'
+      },
+      {
+        type: 'add',
+        path: path.join(process.cwd(), 'src/dashboards/manifest.ts'),
+        templateFile: 'templates/dashboards/manifest.hbs',
+        skipIfExists: true
       }
     ]
   },
@@ -108,33 +110,38 @@ const allGenerators: Record<string, PlopGeneratorConfig> = {
         type: 'input',
         name: 'alias',
         message: 'Enter sidebar alias:',
-        default: 'time'
+        default: 'userManagement'
       },
       {
         type: 'input',
         name: 'name',
         message: 'Enter sidebar name:',
-        default: 'Time'
+        default: 'User Management'
       },
       {
         type: 'input',
         name: 'label',
         message: 'Enter sidebar label:',
-        default: 'Time'
+        default: 'User Management'
       },
       {
         type: 'number',
         name: 'items',
         message: 'Number of menu items:',
         default: 1
-      },
-      ...defaultPrompts
+      }
     ],
     actions: [
       {
         type: 'add',
-        path: 'src/sidebar/{{alias}}/manifest.ts',
-        templateFile: 'templates/sidebar/manifest.hbs'
+        path: path.join(process.cwd(), 'src/sidebars/{{alias}}/manifest.ts'),
+        templateFile: 'templates/sidebars/alias/manifest.hbs'
+      },
+      {
+        type: 'add',
+        path: path.join(process.cwd(), 'src/sidebars/manifest.ts'),
+        templateFile: 'templates/sidebars/manifest.hbs',
+        skipIfExists: true
       }
     ]
   }

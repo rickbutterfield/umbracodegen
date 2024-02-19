@@ -1,6 +1,6 @@
 {
   "name": "umbracodegen",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.4",
   "description": "Generate boilerplate code for building v14+ Umbraco packages",
   "main": "bin/index.js",
   "bin": {

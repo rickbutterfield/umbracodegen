@@ -1,15 +1,5 @@
-import type { ManifestDashboard } from '@umbraco-cms/backoffice/extension-registry';
+import { manifests as {{alias}}DashboardManifests } from './{{alias}}/manifest';
 
-const dashboard: ManifestDashboard = {
-  type: 'dashboard',
-  alias: '{{ alias }}',
-  name: '{{ name }}',
-  element: () => import('./{{ alias }}-dashboard.element.ts'),
-  weight: {{ weight }},
-  meta: {
-    label: '{{ label }}',
-    pathname: '{{ pathname }}'
-  }
-};
-
-export const manifest = [dashboard];
+export const manifests = [
+  ...{{alias}}DashboardManifests
+];
