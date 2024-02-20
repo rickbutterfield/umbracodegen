@@ -7,13 +7,19 @@ Generate boilerplate code for building v14+ Umbraco packages
 `umbracodegen` can be installed with your favourite package manager. It is recommended to install the package globally rather than in individual projects to save time installing every time.
 
 npm:
-`npm i umbracodgen -g`
+```shell
+npm i umbracodgen -g
+```
 
 pnpm:
-`pnpm add umbracodegen -g`
+```shell
+pnpm add umbracodegen -g
+```
 
 bun:
-`bun install umbracodegen -g`
+```shell
+bun install umbracodegen -g
+```
 
 
 ## Usage
