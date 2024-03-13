@@ -8,7 +8,7 @@ Generate boilerplate code for building v14+ Umbraco packages
 
 npm:
 ```shell
-npm i umbracodgen -g
+npm i umbracodegen -g
 ```
 
 pnpm:
