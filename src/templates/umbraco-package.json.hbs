@@ -1,0 +1,15 @@
+{
+  "$schema": "../umbraco-package-schema.json",
+  "name": "{{ name }}",
+  "id": "{{ alias }}",
+  "version": "0.0.0",
+  "allowTelemetry": true,
+  "extensions": [
+    {
+      "name": "{{ alias }}.EntryPoint",
+      "alias": "{{ alias }}.EntryPoint",
+      "type": "entryPoint",
+      "js": "/app_plugins/{{ alias }}/assets.js"
+    }
+  ]
+}

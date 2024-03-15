@@ -1,6 +1,6 @@
 {
   "name": "umbracodegen",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "Generate boilerplate code for building v14+ Umbraco packages",
   "main": "bin/index.js",
   "bin": {
@@ -10,9 +10,12 @@
   "author": "Rick Butterfield",
   "type": "module",
   "scripts": {
-    "build": "tsc && cp -R src/templates bin/",
-    "package": "npm run build && node bin/index.js",
+    "build": "npm run clean && tsc && npm run copy-files",
+    "clean": "rimraf my-dashboard",
+    "copy-files": "copyfiles -u 1 src/templates/**/* bin",
+    "package": "npm run build && npm run start:new",
     "start": "node bin/index.js",
+    "start:new": "node bin/index.js new",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,12 +34,15 @@
   "dependencies": {
     "@types/figlet": "^1.5.8",
     "commander": "^12.0.0",
+    "create-vite": "^5.2.2",
     "figlet": "^1.7.0",
     "inquirer": "^9.2.14",
     "lodash-es": "^4.17.21",
     "minimist": "^1.2.8",
     "node-plop": "^0.32.0",
-    "plop": "^4.0.1"
+    "ora": "^8.0.1",
+    "plop": "^4.0.1",
+    "plop-pack-remove": "^1.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.9",
@@ -47,7 +53,10 @@
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.11.19",
     "babel": "^6.23.0",
+    "copyfiles": "^2.4.1",
     "handlebars": "^4.7.8",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^5.0.5",
     "typescript": "^5.3.3"
   }
 }

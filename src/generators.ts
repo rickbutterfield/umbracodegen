@@ -1,7 +1,6 @@
-import { PlopGeneratorConfig, Prompts } from 'node-plop';
 import path from 'path';
 
-const allGenerators: Record<string, PlopGeneratorConfig> = {
+const allGenerators: Record<string, any> = {
   section: {
     description: 'Generate a new section',
     prompts: [
@@ -161,5 +160,66 @@ allGenerators['builder'] = {
   ],
   actions: []
 };
+
+allGenerators['new'] = {
+  description: 'Scaffold a project from scratch',
+  prompts: [
+    {
+      type: 'input',
+      name: 'name',
+      message: 'Project name:',
+      default: 'My Dashboard'
+    },
+    {
+      type: 'input',
+      name: 'alias',
+      message: 'Project alias:',
+      default: 'my-dashboard'
+    }
+  ],
+  actions: [
+    {
+      type: 'add',
+      path: path.join(process.cwd(), '{{alias}}/vite.config.ts'),
+      templateFile: 'templates/vite.config.ts.hbs'
+    },
+    {
+      type: 'add',
+      path: path.join(process.cwd(), '{{alias}}/src/index.ts'),
+      templateFile: 'templates/index.ts.hbs'
+    },
+    {
+      type: 'add',
+      path: path.join(process.cwd(), '{{alias}}/public/umbraco-package.json'),
+      templateFile: 'templates/umbraco-package.json.hbs'
+    },
+    {
+      type: 'modify',
+      path: path.join(process.cwd(), '{{alias}}/package.json'),
+      pattern: /"scripts":\s*{/,
+      template: `"scripts": {\r\n    "watch": "vite build --watch",`
+    },
+    {
+      type: 'remove',
+      path: path.join(process.cwd(), '{{alias}}/public/vite.svg'),
+      force: true
+    },
+    {
+      type: 'remove',
+      path: path.join(process.cwd(), '{{alias}}/src/assets'),
+      force: true
+    },
+    {
+      type: 'remove',
+      path: path.join(process.cwd(), '{{alias}}/index.html'),
+      force: true
+    },
+    {
+      type: 'remove',
+      path: path.join(process.cwd(), '{{alias}}/src/my-element.ts'),
+      force: true
+    }
+  ]
+}
 
 export const generators = allGenerators;
