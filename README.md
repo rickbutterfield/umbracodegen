@@ -23,7 +23,7 @@ bun install umbracodegen -g
 
 
 ## Usage
-To run `umbracodegen`, simply type `umb` or `umbracodegen` into your terminal. There are current two commands at your disposal
+To run `umbracodegen`, simply type `umb` or `umbracodegen` into your terminal. There are currently two commands at your disposal:
 
 ### `umb new`
 Running `umb new` will scaffold a blank Vite/Lit/TypeScript project as per the instructions in [the Umbraco documentation](https://docs.umbraco.com/umbraco-cms/v/14.latest-beta/extending-backoffice/development-flow/vite-package-setup).
@@ -35,13 +35,13 @@ Supported components:
 - [x] sections (`ManifestSection`)
 - [x] dashboards (`ManifestDashboard`)
 - [x] sidebars (`ManifestSectionSidebarApp`, `ManifestMenu`, `ManifestMenuItem`)
+- [ ] header apps (`ManifestHeaderApp`)
 - [ ] workspaces / workspace views (`ManifestWorkspace`)
 - [ ] property editors (`ManifestPropertyEditorSchema`, `ManifestPropertyEditorUi`)
 - [ ] actions (workspace / entity) (`ManifestEntityAction`, `ManifestWorkspaceAction`)
-- [ ] header apps (`ManifestHeaderApp`)
 
 ## Roadmap
 Some ideas for future releases include
-- [x] Scaffolding a whole package with default Lit/TypeScript/Vite tooling
+- [x] Scaffolding a blank package with default Vite/Lit/TypeScript tooling
 - [ ] Set target path with an `--output|-o` option
 - [ ] Ability to run `npx create umbracodegen@latest`
