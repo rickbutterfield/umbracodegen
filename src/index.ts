@@ -14,9 +14,6 @@ import { Answers } from 'inquirer';
 import './helpers.js';
 import { createViteProject, runNpmInstall, runBackofficeInstall } from './functions.js';
 
-const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-const version = packageJson.version;
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const plopfilePath = path.resolve(__dirname, 'plopfile.js');
@@ -36,7 +33,7 @@ figlet('umbracodegen', (err, data) => {
 
   program
     .name("umbracodegen")
-    .version(version)
+    .version("1.0.0-alpha.5")
     .description("Generate boilerplate code for building v14+ Umbraco packages")
     .alias("umb");
 
