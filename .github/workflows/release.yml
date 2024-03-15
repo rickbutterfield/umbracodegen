@@ -1,0 +1,31 @@
+name: Release Package
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+  
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: $(cat .nvmrc)  # Use the version defined in .nvmrc
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build package
+      run: npm run build  # Adjust this command based on your project setup
+
+    - name: Publish to npm
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}  # Make sure you have this token stored in GitHub secrets
