@@ -42,7 +42,7 @@ figlet('umbracodegen', (err, data) => {
 
   program
     .command('new')
-    .description('Create a new project from scratch')
+    .description('Scaffold a new blank Vite/Lit/TypeScript project from scratch')
     .action(async () => {
       console.log("Let's get a new project generated!");
 
