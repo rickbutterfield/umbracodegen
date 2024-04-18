@@ -33,7 +33,7 @@ figlet('umbracodegen', (err, data) => {
 
   program
     .name("umbracodegen")
-    .version("1.0.0-alpha.5")
+    .version("1.0.0-alpha.6")
     .description("Generate boilerplate code for building v14+ Umbraco packages")
     .alias("umb");
 

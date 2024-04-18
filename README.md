@@ -26,7 +26,7 @@ bun install umbracodegen -g
 To run `umbracodegen`, simply type `umb` or `umbracodegen` into your terminal. There are currently two commands at your disposal:
 
 ### `umb new`
-Running `umb new` will scaffold a blank Vite/Lit/TypeScript project as per the instructions in [the Umbraco documentation](https://docs.umbraco.com/umbraco-cms/v/14.latest-beta/extending-backoffice/development-flow/vite-package-setup).
+Running `umb new` will scaffold a blank Vite/Lit/TypeScript project as per the instructions in [the Umbraco documentation](https://docs.umbraco.com/umbraco-cms/v/14.latest-rc/extending-backoffice/development-flow/vite-package-setup).
 
 ### `umb generate [component]`
 Currently, running `umb generate [component]` will start an interactive builder to scaffold the most used types of components within the backoffice, heavily inspired by code from [Kevin Jump's TimeDashboard](https://github.com/kevinjump/TimeDashboard/)

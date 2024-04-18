@@ -20,7 +20,7 @@ function runProcess(command: string, cwd: string | undefined = undefined): Promi
 }
 
 export async function createViteProject(projectAlias: string, spinner: Ora): Promise<void> {
-  const command = `npm create vite@5.2.2 ${projectAlias} -- --template lit-ts`;
+  const command = `npm create vite@latest ${projectAlias} -- --template lit-ts`;
 
   try {
     spinner.text = `Creating new project in ${projectAlias}`;
@@ -46,7 +46,7 @@ export async function runNpmInstall(projectAlias: string, spinner: Ora): Promise
 }
 
 export async function runBackofficeInstall(projectAlias: string, spinner: Ora): Promise<void> {
-  const command = 'npm install --registry https://www.myget.org/F/umbracoprereleases/npm/ -D @umbraco-cms/backoffice@14.0.0-beta001';
+  const command = 'npm install --registry https://www.myget.org/F/umbracoprereleases/npm/ -D @umbraco-cms/backoffice@14.0.0-rc1';
   
   try {
     spinner.text = `Running backoffice install in ${projectAlias}`;

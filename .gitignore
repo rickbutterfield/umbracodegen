@@ -133,3 +133,6 @@ dist
 bin
 .DS_Store
 package-lock.json
+
+# Custom files
+my-dashboard/**
