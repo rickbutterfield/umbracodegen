@@ -19,11 +19,11 @@ function runProcess(command: string, cwd: string | undefined = undefined): Promi
   });
 }
 
-export async function createViteProject(projectAlias: string, spinner: Ora): Promise<void> {
-  const command = `npm create vite@latest ${projectAlias} -- --template lit-ts`;
+export async function createViteProject(folderName: string, spinner: Ora): Promise<void> {
+  const command = `npm create vite@latest ${folderName} -- --template lit-ts`;
 
   try {
-    spinner.text = `Creating new project in ${projectAlias}`;
+    spinner.text = `Creating new project in ${folderName}`;
     await runProcess(command);
     spinner.text = 'Project creation successful!';
   } catch (error) {
@@ -32,26 +32,26 @@ export async function createViteProject(projectAlias: string, spinner: Ora): Pro
   }
 }
 
-export async function runNpmInstall(projectAlias: string, spinner: Ora): Promise<void> {
+export async function runNpmInstall(folderName: string, spinner: Ora): Promise<void> {
   const command = 'npm install';
 
   try {
-    spinner.text = `Running npm install in ${projectAlias}`;
-    await runProcess(command, projectAlias);
-    spinner.text = `npm install in ${projectAlias} directory successful!`;
+    spinner.text = `Running npm install in ${folderName}`;
+    await runProcess(command, folderName);
+    spinner.text = `npm install in ${folderName} directory successful!`;
   } catch (error) {
-    console.error(`npm install in ${projectAlias} directory failed with exit code:`, error);
-    throw new Error(`npm install in ${projectAlias} directory failed with exit code: ${error}`);
+    console.error(`npm install in ${folderName} directory failed with exit code:`, error);
+    throw new Error(`npm install in ${folderName} directory failed with exit code: ${error}`);
   }
 }
 
-export async function runBackofficeInstall(projectAlias: string, spinner: Ora): Promise<void> {
-  const command = 'npm install --registry https://www.myget.org/F/umbracoprereleases/npm/ -D @umbraco-cms/backoffice@14.0.0-rc1';
+export async function runBackofficeInstall(folderName: string, spinner: Ora): Promise<void> {
+  const command = 'npm install --registry https://www.myget.org/F/umbracoprereleases/npm/ -D @umbraco-cms/backoffice@14.0.0-rc2';
   
   try {
-    spinner.text = `Running backoffice install in ${projectAlias}`;
-    await runProcess(command, projectAlias);
-    spinner.text = `Backoffice install in ${projectAlias} successful!`;
+    spinner.text = `Running backoffice install in ${folderName}`;
+    await runProcess(command, folderName);
+    spinner.text = `Backoffice install in ${folderName} successful!`;
   } catch (error) {
     console.error('Backoffice install failed with exit code:', error);
     throw new Error(`Packoffice install failed with exit code: ${error}`);

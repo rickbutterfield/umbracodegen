@@ -33,7 +33,7 @@ figlet('umbracodegen', (err, data) => {
 
   program
     .name("umbracodegen")
-    .version("1.0.0-alpha.6")
+    .version("1.0.0-alpha.7")
     .description("Generate boilerplate code for building v14+ Umbraco packages")
     .alias("umb");
 
@@ -48,43 +48,47 @@ figlet('umbracodegen', (err, data) => {
         .runPrompts()
         .then(async (answers: Answers) => {
           const spinner = ora('Generating your new Vite lit-ts project...').start();
-          const projectAlias = answers['alias'];
+          
+          const alias = answers['alias'];
+          const folderName = answers['folder'];
 
-          await createViteProject(projectAlias, spinner);
+          await createViteProject(folderName, spinner);
           spinner.text = 'Project generated! Running `npm install`...';
 
-          await runNpmInstall(projectAlias, spinner);
-          await runBackofficeInstall(projectAlias, spinner);
+          // await runNpmInstall(folderName, spinner);
+          // await runBackofficeInstall(folderName, spinner);
 
-          await generator.runActions(answers);
-          spinner.succeed(`Project ${projectAlias} has been generated successfully!`);
+          const { changes, failures } = await generator.runActions(answers);
+          console.log(changes);
+          console.log(failures);
+          spinner.succeed(`Project ${alias} has been generated successfully!`);
         });
     });
 
-  program
-    .command('generate')
-    .description('Generate a new component')
-    .argument('[component]', `specify the type of component to create (${commaSeparatedList})`)
-    .action(async (component) => {
-      if (component) {
-        const generator = plop.getGenerator(component);
-        const answers = await generator.runPrompts();
-        await generator.runActions(answers);
-        console.log(`${component} component generated successfully!`);
-      }
-      else {
-        const generator = plop.getGenerator('builder');
-        const answers = await generator.runPrompts();
+  // program
+  //   .command('generate')
+  //   .description('Generate a new component')
+  //   .argument('[component]', `specify the type of component to create (${commaSeparatedList})`)
+  //   .action(async (component) => {
+  //     if (component) {
+  //       const generator = plop.getGenerator(component);
+  //       const answers = await generator.runPrompts();
+  //       await generator.runActions(answers);
+  //       console.log(`${component} component generated successfully!`);
+  //     }
+  //     else {
+  //       const generator = plop.getGenerator('builder');
+  //       const answers = await generator.runPrompts();
         
-        const selectedComponent = answers["component"];
-        const componentGenerator = plop.getGenerator(selectedComponent);
+  //       const selectedComponent = answers["component"];
+  //       const componentGenerator = plop.getGenerator(selectedComponent);
         
-        const componentAnswers = await componentGenerator.runPrompts();
-        await componentGenerator.runActions(componentAnswers);
+  //       const componentAnswers = await componentGenerator.runPrompts();
+  //       await componentGenerator.runActions(componentAnswers);
 
-        console.log(`${selectedComponent} component generated successfully!`);
-      }
-    });
+  //       console.log(`${selectedComponent} component generated successfully!`);
+  //     }
+  //   });
 
   program.parse(process.argv);
 });

@@ -136,3 +136,4 @@ package-lock.json
 
 # Custom files
 my-dashboard/**
+assets/**
