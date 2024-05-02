@@ -1,4 +1,5 @@
-import Choice from 'inquirer/lib/objects/choice';
+import { Answers } from 'inquirer';
+import { skip } from 'node:test';
 import path from 'path';
 
 const allGenerators: Record<string, object> = {
@@ -187,7 +188,25 @@ allGenerators['new'] = {
       type: 'checkbox',
       name: 'components',
       message: 'Which components would you like to generate?',
-      choices: [ 'context', 'section' ]
+      default: ['section'],
+      choices: [
+        {
+          name: 'Context (`ManifestGlobalContext` - used for connecting to an API)',
+          value: 'context'
+        },
+        {
+          name: 'Section (`ManifestSection` - add across the top menu along with Content, Media, Users, etc)',
+          value: 'section'
+        }
+      ]
+    },
+    {
+      type: 'confirm',
+      name: 'menu',
+      message: 'Would you like to add a menu to your section?',
+      when: (answers: Answers) => {
+        return answers['components'].includes('section');
+      }
     }
   ],
   actions: [
@@ -202,6 +221,57 @@ allGenerators['new'] = {
       templateFile: 'templates/index.ts.hbs'
     },
     {
+      type: 'addMany',
+      destination: path.join(process.cwd(), '{{folder}}/src'),
+      templateFiles: 'templates/context/**/*',
+      skip: (answers: any) => {
+        if (!answers["components"]?.includes("context")) {
+          return 'skip';
+        }
+      }
+    },
+    {
+      type: 'addMany',
+      destination: path.join(process.cwd(), '{{folder}}/src'),
+      templateFiles: 'templates/repository/**/*',
+      skip: (answers: any) => {
+        if (!answers["components"]?.includes("context")) {
+          return 'skip';
+        }
+      }
+    },
+    {
+      type: 'add',
+      path: path.join(process.cwd(), '{{folder}}/src/section/manifests.ts'),
+      templateFile: 'templates/section/manifests.ts.hbs',
+      skip: (answers: any) => {
+        if (!answers["components"]?.includes("section")) {
+          return 'skip';
+        }
+      }
+    },
+    {
+      type: 'add',
+      path: path.join(process.cwd(), '{{folder}}/src/section/{{kebabCase alias}}-section-view.element.ts'),
+      templateFile: 'templates/section/section-view.element.ts.hbs',
+      skip: (answers: any) => {
+        if (!answers["components"]?.includes("section")) {
+          return 'skip';
+        }
+      }
+    },
+    {
+      type: 'addMany',
+      destination: path.join(process.cwd(), '{{folder}}/src'),
+      templateFiles: 'templates/section/first-menu-item/**/*',
+      skip: (answers: any) => {
+        console.log(answers);
+        if (!answers["components"]?.includes("section") && !answers["menu"]) {
+          return 'skip';
+        }
+      }
+    },  
+    {
       type: 'add',
       path: path.join(process.cwd(), '{{folder}}/public/umbraco-package.json'),
       templateFile: 'templates/umbraco-package.json.hbs'
@@ -211,6 +281,12 @@ allGenerators['new'] = {
       path: path.join(process.cwd(), '{{folder}}/package.json'),
       pattern: /"scripts":\s*{/,
       template: `"scripts": {\r\n    "watch": "vite build --watch",`
+    },
+    {
+      type: 'modify',
+      path: path.join(process.cwd(), '{{folder}}/tsconfig.json'),
+      pattern: /\n    "noUnusedLocals": true,/,
+      template: ``
     },
     {
       type: 'remove',
@@ -225,6 +301,11 @@ allGenerators['new'] = {
     {
       type: 'remove',
       path: path.join(process.cwd(), '{{folder}}/index.html'),
+      force: true
+    },
+    {
+      type: 'remove',
+      path: path.join(process.cwd(), '{{folder}}/src/index.css'),
       force: true
     },
     {

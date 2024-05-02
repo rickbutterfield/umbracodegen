@@ -1,0 +1,12 @@
+import { ManifestGlobalContext } from '@umbraco-cms/backoffice/extension-registry';
+
+const contexts: Array<ManifestGlobalContext> = [
+  {
+    type: 'globalContext',
+    alias: '{{alias}}.Context',
+    name: '{{alias}} context',
+    js: () => import('./{{kebabCase alias}}.context.ts')
+  }
+]
+
+export const manifests = [...contexts];

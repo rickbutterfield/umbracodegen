@@ -1,13 +1,32 @@
 import { UmbEntryPointOnInit } from '@umbraco-cms/backoffice/extension-api';
 
-export const onInit: UmbEntryPointOnInit = (host, extensionRegistry) => {
-  
-  extensionRegistry.registerMany(
-    [
-    ]
-  );
+{{#contains "context" components this}}
+import { manifests as contextManifests } from './context/manifests.ts';
+{{/contains}}
+{{#contains "section" components this}}
+import { manifests as sectionManifests } from './section/manifests.ts';
+{{/contains}}
 
-  {{#contains "context" components}}
+{{#contains "context" components this}}
+import {{pascalCase alias}}Context, { {{constantCase alias}}_CONTEXT } from './context/{{kebabCase alias}}.context.ts';
+{{/contains}}
+
+{{#contains "context" components this}}
+export * from './repository/index';
+{{/contains}}
+
+export const onInit: UmbEntryPointOnInit = ({{#contains "context" components this}}host{{else}}_host{{/contains}}, extensionRegistry) => {
+  
+  extensionRegistry.registerMany([
+  {{#contains "context" components this}}
+    ...contextManifests,
+  {{/contains}}
+  {{#contains "section" components this}}
+    ...sectionManifests,
+  {{/contains}}
+  ]);
+
+  {{#contains "context" components this}}
   host.provideContext({{constantCase alias}}_CONTEXT, new {{pascalCase alias}}Context(host));
   {{/contains}}
 };

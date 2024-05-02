@@ -54,6 +54,20 @@ export async function runBackofficeInstall(folderName: string, spinner: Ora): Pr
     spinner.text = `Backoffice install in ${folderName} successful!`;
   } catch (error) {
     console.error('Backoffice install failed with exit code:', error);
-    throw new Error(`Packoffice install failed with exit code: ${error}`);
+    throw new Error(`Backoffice install failed with exit code: ${error}`);
+  }
+}
+
+
+export async function runBuild(folderName: string, spinner: Ora): Promise<void> {
+  const command = 'npm run build';
+
+  try {
+    spinner.text = `Running npm run build in ${folderName}`;
+    await runProcess(command, folderName);
+    spinner.text = `npm run build in ${folderName} successful!`;
+  } catch (error) {
+    console.error('npm run build failed with exit code:', error);
+    throw new Error(`npm run build failed with exit code: ${error}`);
   }
 }

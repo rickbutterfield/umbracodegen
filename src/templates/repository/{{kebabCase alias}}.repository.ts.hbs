@@ -1,0 +1,14 @@
+import { UmbControllerBase } from "@umbraco-cms/backoffice/class-api";
+import { UmbControllerHost } from "@umbraco-cms/backoffice/controller-api";
+import { {{pascalCase alias}}DataSource } from "./sources/{{kebabCase alias}}.datasource";
+
+export class {{pascalCase alias}}Repository extends UmbControllerBase {
+  #{{camelCase alias}}DataSource: {{pascalCase alias}}DataSource;
+
+  constructor(host: UmbControllerHost) {
+    super(host);
+    this.#{{camelCase alias}}DataSource = new {{pascalCase alias}}DataSource(this);
+  }
+}
+
+export default {{pascalCase alias}}Repository;

@@ -1,0 +1,33 @@
+import type { ManifestWorkspace{{#contains "context" components this}}, ManifestWorkspaceContext{{/contains}} } from "@umbraco-cms/backoffice/extension-registry";
+import { {{constantCase alias}}_ROOT_ENTITY_TYPE } from "../types";
+
+const workspaceAlias = "{{pascalCase alias}}.Workspace.Root";
+{{#contains "context" components this}}
+const contextAlias = "{{pascalCase alias}}.Workspace.Context";
+{{/contains}}
+
+const workspace: ManifestWorkspace = {
+  type: "workspace",
+  alias: workspaceAlias,
+  name: "Root Workspace",
+  js: () => import('./workspace.element'),
+  meta: {
+    entityType: {{constantCase alias}}_ROOT_ENTITY_TYPE
+  },
+};
+
+{{#contains "context" components this}}
+const context: ManifestWorkspaceContext = {
+  type: 'workspaceContext',
+  alias: contextAlias,
+  name: 'Workspace Context',
+  js: () => import('../../../context/{{kebabCase alias}}.context'),
+};
+{{/contains}}
+
+export const manifests = [
+  workspace,
+  {{#contains "context" components this}}
+  context,
+  {{/contains}}
+];

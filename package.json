@@ -11,11 +11,11 @@
   "type": "module",
   "scripts": {
     "build": "npm run clean && tsc && npm run copy-files",
-    "clean": "rimraf my-dashboard && rimraf assets",
+    "clean": "rimraf assets && rimraf bin",
     "copy-files": "copyfiles -u 1 src/templates/** bin",
     "package": "npm run build && npm run start:new",
     "start": "node bin/index.js",
-    "start:new": "node bin/index.js new",
+    "start:new": "node bin/index.js new -v",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

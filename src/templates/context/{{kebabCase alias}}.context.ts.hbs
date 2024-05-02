@@ -1,0 +1,20 @@
+import { UmbControllerBase } from "@umbraco-cms/backoffice/class-api";
+import { UmbContextToken } from "@umbraco-cms/backoffice/context-api";
+import { UmbControllerHost } from "@umbraco-cms/backoffice/controller-api";
+import { {{pascalCase alias}}Repository } from "../repository/{{kebabCase alias}}.repository";
+
+export class {{ pascalCase alias }}Context extends UmbControllerBase {
+
+  #repository: {{pascalCase alias}}Repository;
+
+  constructor(host: UmbControllerHost) {
+    super(host);
+    this.#repository = new {{pascalCase alias}}Repository(this);
+  }
+
+}
+
+export default {{pascalCase alias}}Context;
+
+export const {{constantCase alias}}_CONTEXT =
+  new UmbContextToken<{{pascalCase alias}}Context>('{{pascalCase alias}}Context');

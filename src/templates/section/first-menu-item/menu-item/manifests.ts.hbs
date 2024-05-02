@@ -1,0 +1,17 @@
+import type { ManifestMenuItem } from '@umbraco-cms/backoffice/extension-registry';
+import { {{constantCase alias}}_ROOT_ENTITY_TYPE } from '../types';
+
+const menuItem: ManifestMenuItem = {
+  type: 'menuItem',
+  alias: '{{pascalCase alias}}.MenuItem.FirstMenuItem',
+  name: '{{name}} Menu Item',
+  weight: 2000,
+  meta: {
+    label: 'First Menu Item',
+    icon: 'icon-dashboard',
+    entityType: {{constantCase alias}}_ROOT_ENTITY_TYPE,
+    menus: ["Umb.Menu.{{pascalCase alias}}"],
+  }
+};
+
+export const manifests = [menuItem];

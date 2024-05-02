@@ -1,0 +1,60 @@
+import { ManifestSection, ManifestSectionView{{#if menu}}, ManifestMenu{{/if}} } from "@umbraco-cms/backoffice/extension-registry";
+
+{{#if menu}}
+import { manifests as menuItemManifest } from './first-menu-item/manifests';
+{{/if}}
+
+const sectionAlias = "Umb.Section.{{pascalCase alias}}";
+const sectionViewAlias = "Umb.SectionView.{{pascalCase alias}}";
+{{#if menu}}
+const menuAlias = "Umb.Menu.{{pascalCase alias}}";
+{{/if}}
+
+const section: ManifestSection = {
+  type: "section",
+  alias: sectionAlias,
+  name: "{{name}} Section",
+  weight: 0,
+  meta: {
+    label: "{{name}}",
+    pathname: "{{kebabCase alias}}",
+  },
+};
+
+const sectionView: ManifestSectionView = {
+  type: "sectionView",
+  alias: sectionViewAlias,
+  name: "{{name}} Section View",
+  element: () => import('./{{kebabCase alias}}-section-view.element'),
+  meta: {
+    label: '{{name}}',
+    icon: 'icon-dashboard',
+    pathname: 'view'
+  },
+  conditions: [
+    {
+      alias: 'Umb.Condition.SectionAlias',
+      match: sectionAlias
+    }
+  ]
+}
+
+{{#if menu}}
+const menu: ManifestMenu = {
+  type: "menu",
+  alias: menuAlias,
+  name: "{{name}} Menu",
+  meta: {
+    label: "{{name}}",
+  },
+};
+{{/if}}
+
+export const manifests = [
+  section,
+  sectionView,
+  {{#if menu}}
+  menu,
+  ...menuItemManifest
+  {{/if}}
+]
